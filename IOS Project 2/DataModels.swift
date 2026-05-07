@@ -8,13 +8,13 @@
 import Foundation
 
 struct Deck: Codable {
+    var success: Bool
     var deck_id: String
-    var remaining: Int
     var shuffled: Bool
+    var remaining: Int
 }
 
-struct Card: Codable, Identifiable {
-    var id: Int
+struct Card: Codable {
     var code: String
     var image: String
     var value: Int

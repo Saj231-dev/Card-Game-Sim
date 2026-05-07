@@ -9,8 +9,8 @@ import SwiftUI
 
 @Observable
 class DataManager {
-    private let apiURL = "https://deckofcardsapi.com/api/deck/"
-    private var deckSize = 2
+    let apiURL = "https://deckofcardsapi.com/api/deck/"
+    var deckSize = 2
     
     init(deckSize: Int = 2) {
         self.deckSize = deckSize
