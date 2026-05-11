@@ -25,6 +25,8 @@ struct ContentView: View {
                             print("status code: \(responseConverted.statusCode)")
                         }
                         let deck: Deck = try JSONDecoder().decode(Deck.self, from: data)
+                        let deckID = deck.deck_id
+                            print(deck)
                     } catch let error {
                         print(error)
                     }

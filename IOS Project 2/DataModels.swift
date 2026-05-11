@@ -21,4 +21,9 @@ struct Card: Codable {
     var suit: String
 }
 
+enum subType {
+    case deck
+    case card
+}
+
 // Note: This might or might not work, we have to set up the basic api decoding stuff beforehand
