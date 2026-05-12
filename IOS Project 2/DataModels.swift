@@ -7,14 +7,17 @@
 
 import Foundation
 
-struct Deck: Codable {
-    var success: Bool
+struct DeckID: Codable {
     var deck_id: String
-    var shuffled: Bool
+}
+
+struct Deck: Codable {
+    var cards: [Card]
     var remaining: Int
 }
 
-struct Card: Codable {
+struct Card: Codable, Identifiable {
+    var id = UUID()
     var code: String
     var image: String
     var value: Int

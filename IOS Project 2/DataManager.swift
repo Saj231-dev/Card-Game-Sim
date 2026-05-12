@@ -10,30 +10,51 @@ import SwiftUI
 @Observable
 class DataManager {
     let apiURL = "https://deckofcardsapi.com/api/deck/"
-    var deckSize = 2
+    var drawAmount = 2
     
-    init(deckSize: Int = 2) {
-        self.deckSize = deckSize
+    init(drawAmount: Int = 2) {
+        self.drawAmount = drawAmount
     }
     
-    func jsonDecoding(subType: subType) async {
-        let urlStr = if subType == .deck { self.apiURL + "new" } else { "h" }
+    private func getDeckID() async -> DeckID? {
+        let urlStr = self.apiURL + "new"
         let url: URL? = URL(string: urlStr)
         guard let urlUnwrapped = url else {
-            return
+            return nil
         }
         do {
             let (data, response) = try await URLSession.shared.data(from: urlUnwrapped)
             if let responseConverted = response as? HTTPURLResponse {
                 print("status code: \(responseConverted.statusCode)")
             }
-            if subType == .deck {
-                let deck: Deck = try JSONDecoder().decode(Deck.self, from: data)
-                let deckID = deck.deck_id
-                print(deck)
-            }
+            let deckID: DeckID = try JSONDecoder().decode(DeckID.self, from: data)
+            return deckID
         } catch let error {
             print(error)
+            return nil
+        }
+    }
+    
+    func drawCard() async -> Deck? {
+        let deckID = await getDeckID()
+        guard let unwrappedID = deckID else {
+            return nil
+        }
+        let cardURL = apiURL + unwrappedID.deck_id + "/draw/?count=\(self.drawAmount)"
+        let url: URL? = URL(string: cardURL)
+        guard let urlUnwrapped = url else {
+            return nil
+        }
+        do {
+            let (data, response) = try await URLSession.shared.data(from: urlUnwrapped)
+            if let responseConverted = response as? HTTPURLResponse {
+                print("status code: \(responseConverted.statusCode)")
+            }
+            let deck: Deck = try JSONDecoder().decode(Deck.self, from: data)
+            return deck
+        } catch let error {
+            print(error)
+            return nil
         }
     }
 }
