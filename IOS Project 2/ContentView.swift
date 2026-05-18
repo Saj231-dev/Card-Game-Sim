@@ -23,6 +23,16 @@ struct ContentView: View {
             Button("Shuffle") {
                 onClick = true
             }
+            
+            //Button{
+                //Task {
+                    //if let deck = await dataManager.drawCard() {
+                        //cards = deck.deck.cards
+                    //}
+                //}
+            //} label: {
+                //Text("Draw Cards")
+        //}
         }
         .task {
             var deck = await dataManager.drawCard()
