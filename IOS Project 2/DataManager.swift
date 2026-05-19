@@ -44,7 +44,7 @@ class DataManager {
 //    }
     
     func drawCard() async -> Deck? {
-        let cardURL = apiURL + "new/draw/?count=12"
+        let cardURL = apiURL + "new/draw/?count=52"
         let url: URL? = URL(string: cardURL)
         guard let urlUnwrapped = url else {
             return nil
@@ -63,7 +63,6 @@ class DataManager {
     }
     
     func shuffle(deck: Deck) async -> Deck? {
-        let strID = deck.deck_id
         let shuffleURL = apiURL + "\(deck.deck_id)/shuffle/"
         let url: URL? = URL(string: shuffleURL)
         guard let urlUnwrapped = url else {
@@ -82,3 +81,4 @@ class DataManager {
         }
     }
 }
+
